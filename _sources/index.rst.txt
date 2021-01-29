@@ -1,0 +1,20 @@
+.. learncpp-zh documentation master file, created by
+   sphinx-quickstart on Fri Jan 29 16:15:27 2021.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+LearnCpp 中译版：帮助你精通 C++ 和面向对象的教程
+================================================
+
+LearnCpp.com 是一个致力于教会你使用 C++ 编程的 *自由* 网站。无论你之前是否有编程经验，这个网站中的教程都会通过充足的例子带你学习 C++ 程序的编写、编译和纠错的每一步。
+
+锲而不舍，金石可镂。LearnCpp.com 会为你指明精通 C++ 的路。
+
+目录
+====
+
+.. toctree::
+   :maxdepth: 2
+   
+   0-introduction-getting-started/toc
+   1-c++-basics/toc
