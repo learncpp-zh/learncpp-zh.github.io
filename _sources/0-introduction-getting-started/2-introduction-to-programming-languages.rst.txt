@@ -58,10 +58,7 @@
 
 这张图是一个简单概括了编译运行过程的示意图：
 
-.. TODO: 用 plantuml 重画这张图
-
-.. image:: /_static/Compiling-min.png
-   :alt: 编译运行过程示意图
+.. uml:: plantuml/Compiling.puml
 
 考虑到 C++ 程序通常需要被编译，我们很快将会探索关于编译器的一些细节。
 
@@ -69,8 +66,7 @@
 
 这张图是一个简单概括了解释运行过程的示意图：
 
-.. image:: /_static/Interpreting-min.png
-   :alt: 解释运行过程示意图
+.. uml:: plantuml/Interpreting.puml
 
 .. topic:: 选读
     
@@ -86,8 +82,7 @@
 
 第三，程序可以根据系统（译注：此处指硬件系统）进行编译，为了在不同的 CPU 上运行你的程序你不需要要修改程序。举个例子：
 
-.. image:: /_static/Portability-min.png
-   :alt: 可移植性示意图
+.. uml:: plantuml/Portability.puml
 
 对于可以执行来说，有两个特例。一是在很多操作系统中，比如微软 Windows，包含了一些平台专用的能力，你可以在自己的程序中引用他们。这可能会帮助你在特定的平台上写程序时更轻松，但在移植的时候会更加困难。在本教程中，我们会尽量避免这种平台专用代码。
 

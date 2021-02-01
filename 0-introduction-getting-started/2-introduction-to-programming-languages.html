@@ -72,11 +72,43 @@
 <p>上面的语句对应的 C/C++ 语句是：<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">97;</span></code></p>
 <p>和汇编语言很类似，用高级语言编写的程序在运行前也必须被翻译成计算机可以理解的格式。一旦你的代码变成了可执行文件，你在运行程序的时候就不再需要编译器了。在一开始，编译器生成的是原始的、未经优化的、运行缓慢的代码。然而经过了多年的发展，现在的编译器生成的代码已经可以自动优化，运行迅速，甚至在一些情况下比手写的汇编代码还要快！</p>
 <p>这张图是一个简单概括了编译运行过程的示意图：</p>
-<img alt="编译运行过程示意图" src="../_images/Compiling-min.png" />
+<p class="plantuml">
+<img src="../_images/plantuml-91bfe01c52466de23bcde4bae3ffbd44ca808678.png" alt="&#64;startuml Compiling
+
+rectangle 高级语言源码 as src
+rectangle 编译器 as cpl
+rectangle 可执行文件 as exe1
+rectangle 可执行文件 as exe2
+rectangle 硬件 as hdw
+rectangle 运行结果 as res
+
+src -&gt; cpl : 被编译
+cpl -&gt; exe1 : 产出
+
+exe1 -[dotted]-&gt; exe2
+
+exe2 -&gt; hdw : 运行于
+hdw -&gt; res : 产出
+
+&#64;enduml"/>
+</p>
 <p>考虑到 C++ 程序通常需要被编译，我们很快将会探索关于编译器的一些细节。</p>
 <p>一个 <strong>解释器</strong> 指的是一个可以直接运行未被编译成可执行程序的的源代码来运行程序的程序。解释器通常要比编译器更灵活，但效率会偏低。因为解释器通常需要在程序运行的同时翻译代码。当然这也意味着程序在运行的时候也同时需要这个解释器存在。</p>
 <p>这张图是一个简单概括了解释运行过程的示意图：</p>
-<img alt="解释运行过程示意图" src="../_images/Interpreting-min.png" />
+<p class="plantuml">
+<img src="../_images/plantuml-32291d2b94810c5ba161c00df3c761b05950a981.png" alt="&#64;startuml Interpreting
+
+rectangle 高级语言源码 as src
+rectangle 解释器 as int
+rectangle 硬件 as hdw
+rectangle 运行结果 as res
+
+src -&gt; int : 被解释
+int -&gt; hdw : 运行于
+hdw -&gt; res : 产出
+
+&#64;enduml"/>
+</p>
 <div class="topic">
 <p class="topic-title">选读</p>
 <p><a class="reference external" href="https://stackoverflow.com/a/38491646">这里</a> 是一篇关于编译器和解释器优劣对比的优秀文章。</p>
@@ -85,7 +117,26 @@
 <p>高级语言通常具有很多我们想要的属性：</p>
 <p>第一，高级语言对人来说更加易读易写，因为他们更加接近我们日常使用的日常语言。第二，相比低级语言，高级语言可以使用用更少的指令来完成同一个任务。这使得程序更加简洁易懂。在 C++ 里你可以在一行里写这样一个指令：<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">b</span> <span class="pre">*</span> <span class="pre">2</span> <span class="pre">+</span> <span class="pre">5;</span></code>，但在汇编语言里这个指令可能需要五到六个不同的指令一起完成。</p>
 <p>第三，程序可以根据系统（译注：此处指硬件系统）进行编译，为了在不同的 CPU 上运行你的程序你不需要要修改程序。举个例子：</p>
-<img alt="可移植性示意图" src="../_images/Portability-min.png" />
+<p class="plantuml">
+<img src="../_images/plantuml-41d7e90a8115e8973a89bcf9099cf3e33647c181.png" alt="&#64;startuml Portability
+
+rectangle 高级语言源码 as src
+rectangle &quot;面向 x86 硬件的编译器&quot; as x86c
+rectangle &quot;面向 PowerPC 硬件的编译器&quot; as ppcc
+rectangle &quot;面向 MIPS 硬件的编译器&quot; as mipsc
+rectangle &quot;x86 平台可执行文件&quot; as x86e
+rectangle &quot;PowerPC 平台可执行文件&quot; as ppce
+rectangle &quot;MIPS 平台可执行文件&quot; as mipse
+
+src --&gt; x86c
+src --&gt; ppcc
+src --&gt; mipsc
+x86c --&gt; x86e
+ppcc --&gt; ppce
+mipsc --&gt; mipse
+
+&#64;enduml"/>
+</p>
 <p>对于可以执行来说，有两个特例。一是在很多操作系统中，比如微软 Windows，包含了一些平台专用的能力，你可以在自己的程序中引用他们。这可能会帮助你在特定的平台上写程序时更轻松，但在移植的时候会更加困难。在本教程中，我们会尽量避免这种平台专用代码。</p>
 <p>一些编译器支持一些编译器专用拓展——如果你使用这些拓展，你的程序就不能在不更改的前提下使用其他不支持这些拓展的编译器进行编译。在你安装了一个编译器之后我们会多讨论一些关于这件事的东西。</p>
 </div>
