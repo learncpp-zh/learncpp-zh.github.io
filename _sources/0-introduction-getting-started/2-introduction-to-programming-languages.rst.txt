@@ -69,7 +69,7 @@
 .. uml:: plantuml/Interpreting.puml
 
 .. topic:: 选读
-    
+
     `这里`_ 是一篇关于编译器和解释器优劣对比的优秀文章。
 
 .. _这里: https://stackoverflow.com/a/38491646
