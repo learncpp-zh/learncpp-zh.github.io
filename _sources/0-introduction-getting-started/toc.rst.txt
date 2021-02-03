@@ -8,3 +8,4 @@
    2-introduction-to-programming-languages
    3-introduction-to-c-cpp
    4-introduction-to-cpp-development
+   5-introduction-to-the-compiler-linker-and-libraries
