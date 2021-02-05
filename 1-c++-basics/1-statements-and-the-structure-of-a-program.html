@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 
 <html lang="zh">
@@ -7,15 +9,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>第一章第一节 语句及程序结构 &#8212; learncpp-zh  文档</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/traditional.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="prev" title="第一章：C++ 基础" href="toc.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
   </head><body>
+    <div class="relbar-top">
+        
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>导航</h3>
       <ul>
@@ -24,12 +48,15 @@
              accesskey="I">索引</a></li>
         <li class="right" >
           <a href="toc.html" title="第一章：C++ 基础"
-             accesskey="P">上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">learncpp-zh  文档</a> &#187;</li>
+             accesskey="P">上一页</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">learncpp-zh  文档</a> &#187;</li>
+
           <li class="nav-item nav-item-1"><a href="toc.html" accesskey="U">第一章：C++ 基础</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">第一章第一节 语句及程序结构</a></li> 
       </ul>
-    </div>  
+    </div>
+    </div>
+  
 
     <div class="document">
       <div class="documentwrapper">
@@ -88,9 +115,8 @@
 <p>当讨论函数时， 我们常常将括号写于函数名后面用以速记。举个例子，如果你看见诸如 <code class="code docutils literal notranslate"><span class="pre">main()</span></code> 或 <code class="code docutils literal notranslate"><span class="pre">doSomething()</span></code> 之类的术语，这就是main函数以及doSomething函数的速记形式。这样你在区分函数和其他对象（比如变量）时就不用每次都写“xx函数”了。</p>
 </div>
 </div>
-</div>
 <div class="section" id="hello-world">
-<h1>分解Hello World!<a class="headerlink" href="#hello-world" title="永久链接至标题">¶</a></h1>
+<h2>分解Hello World!<a class="headerlink" href="#hello-world" title="永久链接至标题">¶</a></h2>
 <p>现在你对于语句和函数又了简略的认识，我们来运行“Hello World”程序，然后对于每一行的作用进行更加深入且高层次的理解。</p>
 <div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -114,13 +140,14 @@
 <p>第五行是 <em>main</em>函数的第一条语句，并且也是我们程序运行时会执行的第一条语句。<code class="code docutils literal notranslate"><span class="pre">std::cout</span></code> (表示“字符输出”)以及 &lt;&lt; 运算符让我们可以将字母或数字发送到控制台作为输出。在这份代码中，我们发送的是文本“Hello World”，它会在控制台输出。这个语句创建了本程序的可见输出。</p>
 <p>第六行是一个返回语句，当一个可执行程序结束运行时，这个程序会向操作系统发送一个值来表明它是否成功运行。本程序中的这个语句向操作系统返回的是0，这意味着“一切顺利！”。这是程序中最后执行的语句。</p>
 <p>我们所写的所有程序都将会按照这个通用的模版，或者在此基础上做一些改变。</p>
-<p>。。 topic:: 作者的注释</p>
-<blockquote>
-<div><p>如果上面的解释有一部分（或者全部）对你来说很迷惑，没关系很正常。这只是一个快速的简介。后续的课程将会深入讨论上述的所有话题，并配以更多的解释和例子。</p>
-</div></blockquote>
+<div class="topic">
+<p class="topic-title">作者的注释</p>
+<p>如果上面的解释有一部分（或者全部）对你来说很迷惑，没关系很正常。这只是一个快速的简介。后续的课程将会深入讨论上述的所有话题，并配以更多的解释和例子。</p>
+</div>
 <p>你可以自己编译并且运行这个程序，然后你会看到它在控制台输出如下内容：</p>
 <p><code class="code docutils literal notranslate"><span class="pre">Hello</span> <span class="pre">World!</span></code></p>
 <p>如果你在编译或者执行这个程序的过程中碰到问题，可以看看这个 <span class="xref std std-ref">第零章第八节</span>。</p>
+</div>
 <div class="section" id="id5">
 <h2>小测验<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
 <p>在介绍本节的最后一个内容前，这里有一些测试题来帮助你理解本节的材料，有一些题目的内容是关于还没有提到的本节最后一个内容，你可以先看题目，在看完最后一部分后回来一起完成小测验，小测验的答案将会在最后一个内容之后呈现。</p>
@@ -241,16 +268,14 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">目录</a></h3>
-  <ul>
+        <div class="sphinxsidebarwrapper"><div class="sphinx-toc sphinxlocaltoc">
+    <h3><a href="../index.html">Page contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">第一章第一节 语句及程序结构</a><ul>
 <li><a class="reference internal" href="#id2">章节介绍</a></li>
 <li><a class="reference internal" href="#id3">语句</a></li>
 <li><a class="reference internal" href="#id4">函数和主函数</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#hello-world">分解Hello World!</a><ul>
+<li><a class="reference internal" href="#hello-world">分解Hello World!</a></li>
 <li><a class="reference internal" href="#id5">小测验</a><ul>
 <li><a class="reference internal" href="#id6">第一题</a></li>
 <li><a class="reference internal" href="#id7">第二题</a></li>
@@ -276,9 +301,12 @@
 </li>
 </ul>
 
-  <h4>上一个主题</h4>
-  <p class="topless"><a href="toc.html"
-                        title="上一章">第一章：C++ 基础</a></p>
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="toc.html"
+                          title="Previous page">&larr; 第一章：C++ 基础</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>本页</h3>
     <ul class="this-page-menu">
@@ -298,8 +326,27 @@
 <script>$('#searchbox').show(0);</script>
         </div>
       </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
       <div class="clearer"></div>
     </div>
+    <div class="relbar-bottom">
+        
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>导航</h3>
       <ul>
@@ -308,15 +355,19 @@
              >索引</a></li>
         <li class="right" >
           <a href="toc.html" title="第一章：C++ 基础"
-             >上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">learncpp-zh  文档</a> &#187;</li>
+             >上一页</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">learncpp-zh  文档</a> &#187;</li>
+
           <li class="nav-item nav-item-1"><a href="toc.html" >第一章：C++ 基础</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">第一章第一节 语句及程序结构</a></li> 
       </ul>
     </div>
+    </div>
+
     <div class="footer" role="contentinfo">
         &#169; 版权所有 2021, learncpp-zh.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
+    <!-- cloud_sptheme 1.4 -->
   </body>
 </html>
