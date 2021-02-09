@@ -1,0 +1,7 @@
+第十九章：模板元
+================
+
+.. toctree::
+   :maxdepth: 2
+
+   1-function-templates

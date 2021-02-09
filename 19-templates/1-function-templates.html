@@ -1,0 +1,185 @@
+
+
+
+<!DOCTYPE html>
+
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>第十九章第一节 函数模板 &#8212; learncpp-zh  文档</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+
+    
+    
+     
+        <script src="../_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="../_static/cloud.js"></script>
+    
+
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="prev" title="第十九章：模板元" href="toc.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="toc.html" title="第十九章：模板元"
+             accesskey="P">上一页</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">learncpp-zh  文档</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="toc.html" accesskey="U">第十九章：模板元</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">第十九章第一节 函数模板</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>第十九章第一节 函数模板<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>原文作者：Alex</p>
+<p>首次发布：2008 年 4 月 18 日</p>
+<p>最近更新：2020 年 12 月 21 日</p>
+<p>译者：Karl Liu</p>
+<p>翻译时间：2021 年 2 月 9 日</p>
+<p>原文链接：<a class="reference external" href="https://www.learncpp.com/cpp-tutorial/function-templates/">https://www.learncpp.com/cpp-tutorial/function-templates/</a></p>
+<div class="section" id="id2">
+<h2>为什么需要函数模板<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>在之前的章节中，你已经学习过如何写一些可以让程序更好写、更安全和更可维护的函数和类。即便函数和类功能强大并且灵活性很强，在特定情况下他们还是会有一定限制，因为 C++ 要求你指定所有参数的类型。</p>
+<p>举个例子，假设你想要写一个判断两数中的最大值的函数，你可能会这么写：</p>
+<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">max</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>这个函数可以完美工作——对 <code class="docutils literal notranslate"><span class="pre">int</span></code> 型变量来说。如果之后你想让这个函数同时可以用于 <code class="docutils literal notranslate"><span class="pre">double</span></code> 类型会怎样呢？传统做法是重载这个 max() 函数，写一个可以接收浮点数的版本：</p>
+<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="nf">max</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>请注意这里 <code class="docutils literal notranslate"><span class="pre">double</span></code> 版本 max() 的代码和 <code class="docutils literal notranslate"><span class="pre">int</span></code> 版本是完全一样的！事实上，这个实现对于任何类型都是可用的：<code class="docutils literal notranslate"><span class="pre">char</span></code>、<code class="docutils literal notranslate"><span class="pre">int</span></code>、<code class="docutils literal notranslate"><span class="pre">double</span></code>，并且如果你重载了 <code class="docutils literal notranslate"><span class="pre">operator</span> <span class="pre">&gt;</span></code>，甚至对各种类都可用！然而，因为 C++ 要求你指定变量的类型，所以对于每个你想用的类型，你都不得不写一个重载。</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="sphinx-toc sphinxlocaltoc">
+    <h3><a href="../index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">第十九章第一节 函数模板</a><ul>
+<li><a class="reference internal" href="#id2">为什么需要函数模板</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="toc.html"
+                          title="Previous page">&larr; 第十九章：模板元</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/19-templates/1-function-templates.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="toc.html" title="第十九章：模板元"
+             >上一页</a> &nbsp; &nbsp;</li>
+    <li><a href="../index.html">learncpp-zh  文档</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="toc.html" >第十九章：模板元</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">第十九章第一节 函数模板</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2021, learncpp-zh.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>
