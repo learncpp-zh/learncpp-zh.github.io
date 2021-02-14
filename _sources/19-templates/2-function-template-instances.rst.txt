@@ -1,0 +1,432 @@
+第十九章第二节 函数模板实例
+===========================
+
+原文作者：Alex
+
+首次发布：2008 年 4 月 29 日
+
+最近更新：2020 年 12 月 21 日
+
+译者：Karl Liu
+
+翻译时间：2021 年 2 月 14 日
+
+原文链接：https://www.learncpp.com/cpp-tutorial/function-template-instances/
+
+
+看一看模板函数在 C++ 中是怎么实现的挺有意义的，因为之后的课程会在这些概念之上建立起来。看起来 C++ 并不直接编译模板函数，而是在编译的时候，当编译器遇到一个对模板函数的调用，编译器会复制这个模板函数并用真实类型替代模板类型参数。这个使用真实类型的函数叫做 **模板函数实例**\ 。
+
+让我们来看看这个过程的一个例子。首先我们有一个模板函数：
+
+.. code-block:: C++
+    :linenos:
+
+    template <typename T>
+    const T& max(const T &x, const T &y)
+    {
+        return (x > y) ? x : y;
+    }
+
+当你的程序被编译的时候，编译器遇到了这样一个对模板函数的调用：
+
+.. code-block:: C++
+    :linenos:
+
+    int i{ max(3, 7) };  // 调用了 max(int, int)
+
+编译器会说：“哦，我们想要调用 ``max(int, int)``”。编译器复制函数模板并且构造了模板实例 ``max(int, int)``：
+
+.. code-block:: C++
+    :linenos:
+
+    const int& max(const int &x, const int &y)
+    {
+        return (x > y) ? x : y;
+    }
+
+这个就是个可以被编译成机器码的普通函数了。
+
+现在，比如说，之后你的代码里，你调用了使用了另一种类型的 ``max()``：
+
+.. code-block:: C++
+    :linenos:
+
+    double d{ max(6.34, 18.523) };  // 调用了 max(double, double)
+
+C++ 会自动构造一个 ``max(double, double)`` 的模板实例：
+
+.. code-block:: C++
+    :linenos:
+
+    const double& max(const double &x, const double &y)
+    {
+        return (x > y) ? x : y;
+    }
+
+
+然后编译它。
+
+编译器非常聪明，它可以知道对于每组类型参数（每个文件中）只需要生成一个模板实例。还值得注意的是，如果你创建了一个模板函数但是不调用它，编译器不会创建模板实例。
+
+
+操作符、函数调用和函数模板
+--------------------------
+
+模板函数对于内置类型（比如 ``char``、``int``、``double`` 等等）和类都有效，但有一点需要注意。当编译器编译模板实例的时候，它就和在编译普通函数一样。在模板函数中用到的任何操作符或者函数调用都必须适用于任何你希望为之实例化的类型。我们来看一看这个问题的细节。
+
+首先我们创建一个简单的类：
+
+.. code-block:: C++
+    :linenos:
+
+    class Cents
+    {
+    private:
+        int m_cents;
+    public:
+        Cents(int cents)
+            : m_cents{ m_cents }
+        {
+        }
+    };
+
+现在，我们来看一看将这个 ``Cents`` 类传入我们的模板 ``max()`` 中会怎么样：
+
+.. code-block:: C++
+    :linenos:
+
+    template <typename T>  // 这个就是模板参数声明
+    const T& max(const T& x, const T& y)
+    {
+        return (x > y) ? x : y;
+    }
+    
+    class Cents
+    {
+    private:
+        int m_cents;
+    public:
+        Cents(int cents)
+            : m_cents{ cents }
+        {
+        }
+    };
+    
+    int main()
+    {
+        Cents nickle{ 5 };
+        Cents dime{ 10 };
+    
+        Cents bigger{ max(nickle, dime) };
+    
+        return 0;
+    }
+
+然后编译器会试图编译这个函数。看到问题了吗？C++ 不能计算 ``x > y``，因为 ``x`` 和 ``y`` 是 ``Cents`` 对象，C++ 并不知道怎么比较它们。因此，这会生成一个看起来相当平淡的编译错误，比如：
+
+.. code-block:: Text
+
+    1>c:\consoleapplication1\main.cpp(4): error C2676: binary '>': 'const Cents' does not define this operator or a conversion to a type acceptable to the predefined operator
+    1>  c:\consoleapplication1\main.cpp(23): note: see reference to function template instantiation 'const T &max(const T &,const T &)' being compiled
+    1>          with
+    1>          [
+    1>              T=Cents
+    1>          ]
+
+上面这个错误信息指出，我们没有重载 ``Cents`` 类的 ``operator >``。下面的错误指出，模板函数调用产生了这个错误，同时还附带了模板参数。
+
+为了解决这个问题，我们只需要简单地重载任何我们需要使用的类的 ``operator >`` 就可以了：
+
+.. code-block:: C++
+    :linenos:
+
+    class Cents
+    {
+    private:
+        int m_cents;
+    public:
+        Cents(int cents)
+            : m_cents{ cents }
+        {
+        }
+    
+        friend bool operator>(const Cents &c1, const Cents &c2)
+        {
+            return (c1.m_cents > c2.m_cents);
+        }
+    };
+
+现在 C++ 就可以知道当 ``x`` 和 ``y`` 都是 ``Cents`` 对象的时候怎么比较它们了！结果就是我们的 ``max()`` 函数可以被用在 ``Cents`` 类型上了。
+
+
+另一个例子
+----------
+
+我们再来举一个函数模板的例子。下面这个函数模板会计算一个数组中所有对象的平均值：
+
+.. code-block:: C++
+    :linenos:
+
+    template <class T>
+    T average(T *array, int length)
+    {
+        T sum(0);
+    
+        for (int count{ 0 }; count < length; ++count)
+            sum += array[count];
+    
+        sum /= length;
+        return sum;
+    }
+
+然后我们来看看它用起来怎么样：
+
+.. code-block:: C++
+    :linenos:
+
+    #include <iostream>
+    
+    template <class T>
+    T average(T *array, int length)
+    {
+        T sum(0);
+        for (int count{ 0 }; count < length; ++count)
+            sum += array[count];
+    
+        sum /= length;
+        return sum;
+    }
+    
+    int main()
+    {
+        int array1[]{ 5, 3, 2, 1, 4 };
+        std::cout << average(array1, 5) << '\n';
+    
+        double array2[]{ 3.12, 3.45, 9.23, 6.34 };
+        std::cout << average(array2, 4) << '\n';
+    
+        return 0;
+    }
+
+这会输出这些值：
+
+.. code-block:: Text
+    :linenos:
+
+    3
+    5.535
+
+如你所见，它在内置类型中表现得很棒！
+
+值得一提的事，因为我们的返回值和数组元素的模板类型是一样的，所以计算整型变量的平均值会返回一个整型结果（截断小数部分）。这和我们直接做整型变量的除法会产生整型变量是类似的。我们这样定义这个函数的表现不能说是错的，但是会让人意想不到，所以这里给用户留一个比较完备的注释会比较好。
+
+接下来我们来看看如果我们将 ``Cents`` 数组传进这个函数会怎样：
+
+.. code-block:: C++
+    :linenos:
+
+    #include <iostream>
+    
+    class Cents
+    {
+    private:
+        int m_cents;
+    public:
+        Cents(int cents)
+            : m_cents{ cents }
+        {
+        }
+    
+        friend bool operator>(const Cents &c1, const Cents &c2)
+        {
+            return (c1.m_cents > c2.m_cents);
+        }
+    };
+    
+    template <class T>
+    T average(T *array, int length)
+    {
+        T sum(0);
+        for (int count{ 0 }; count < length; ++count)
+            sum += array[count];
+    
+        sum /= length;
+        return sum;
+    }
+    
+    int main()
+    {
+        Cents array3[]{ Cents(5), Cents(10), Cents(15), Cents(14) };
+        std::cout << average(array3, 4) << '\n';
+    
+        return 0;
+    }
+
+编译器会发疯一样输出一大堆错误信息！
+
+.. code-block:: Text
+
+    example.cpp
+
+    (33): error C2679: binary '<<': no operator found which takes a right-hand operand of type 'T' (or there is no acceptable conversion)
+
+            with
+
+            [
+
+                T=Cents
+
+            ]
+
+    C:/data/msvc/14.22.27905/include\ostream(437): note: could be 'std::basic_ostream> &std::basic_ostream>::operator <<(std::basic_streambuf> *)'
+    C:/data/msvc/14.22.27905/include\ostream(412): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(const void *)'
+    C:/data/msvc/14.22.27905/include\ostream(394): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(long double)'
+    C:/data/msvc/14.22.27905/include\ostream(376): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(double)'
+    C:/data/msvc/14.22.27905/include\ostream(358): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(float)'
+    C:/data/msvc/14.22.27905/include\ostream(340): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(unsigned __int64)'
+    C:/data/msvc/14.22.27905/include\ostream(322): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(__int64)'
+    C:/data/msvc/14.22.27905/include\ostream(304): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(unsigned long)'
+    C:/data/msvc/14.22.27905/include\ostream(286): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(long)'
+    C:/data/msvc/14.22.27905/include\ostream(268): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(unsigned int)'
+    C:/data/msvc/14.22.27905/include\ostream(248): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(int)'
+    C:/data/msvc/14.22.27905/include\ostream(230): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(unsigned short)'
+    C:/data/msvc/14.22.27905/include\ostream(202): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(short)'
+    C:/data/msvc/14.22.27905/include\ostream(184): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(bool)'
+    C:/data/msvc/14.22.27905/include\ostream(179): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(std::ios_base &(__cdecl *)(std::ios_base &))'
+    C:/data/msvc/14.22.27905/include\ostream(174): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(std::basic_ios> &(__cdecl *)(std::basic_ios> &))'
+    C:/data/msvc/14.22.27905/include\ostream(169): note: or       'std::basic_ostream> &std::basic_ostream>::operator <<(std::basic_ostream> &(__cdecl *)(std::basic_ostream> &))'
+    C:/data/msvc/14.22.27905/include\ostream(613): note: or       'std::basic_ostream> &std::operator <<>(std::basic_ostream> &,const char *)'
+    C:/data/msvc/14.22.27905/include\ostream(658): note: or       'std::basic_ostream> &std::operator <<>(std::basic_ostream> &,char)'
+    C:/data/msvc/14.22.27905/include\ostream(694): note: or       'std::basic_ostream> &std::operator <<>(std::basic_ostream> &,const char *)'
+    C:/data/msvc/14.22.27905/include\ostream(739): note: or       'std::basic_ostream> &std::operator <<>(std::basic_ostream> &,char)'
+    C:/data/msvc/14.22.27905/include\ostream(858): note: or       'std::basic_ostream> &std::operator <<>(std::basic_ostream> &,const signed char *)'
+    C:/data/msvc/14.22.27905/include\ostream(864): note: or       'std::basic_ostream> &std::operator <<>(std::basic_ostream> &,signed char)'
+    C:/data/msvc/14.22.27905/include\ostream(870): note: or       'std::basic_ostream> &std::operator <<>(std::basic_ostream> &,const unsigned char *)'
+    C:/data/msvc/14.22.27905/include\ostream(876): note: or       'std::basic_ostream> &std::operator <<>(std::basic_ostream> &,unsigned char)'
+    C:/data/msvc/14.22.27905/include\ostream(931): note: or       'std::basic_ostream> &std::operator <<>(std::basic_ostream> &,const std::error_code &)'
+    (33): note: while trying to match the argument list '(std::ostream, T)'
+
+            with
+
+            [
+
+                T=Cents
+
+            ]
+
+    Compiler returned: 2
+
+还记得我之前说过的离谱的错误信息么？我们踩狗屎运了。但除了看起来比较吓人，这些提示还是比较直白的。第一行告诉你它找不到 ``Cents`` 类的 ``operator<<`` 重载。中间的所有东西都是它试图去匹配但是失败了的函数。最后一个错误指出了究竟是哪个函数产生了这么多错误信息。
+
+请记住，``average()`` 函数返回一个 ``Cents`` 对象，我们在试图用 ``operator<<`` 向 ``std::cout`` 流式输出这个对象。然而我们并没有为 ``Cents`` 类定义 ``operator<<`` 操作符。那么我们现在来定义一下：
+
+.. code-block:: C++
+    :linenos:
+
+    class Cents
+    {
+    private:
+        int m_cents;
+    public:
+        Cents(int cents)
+            : m_cents{ cents }
+        {
+        }
+    
+        friend bool operator>(const Cents &c1, const Cents &c2)
+        {
+            return (c1.m_cents > c2.m_cents);
+        }
+    
+        friend std::ostream& operator<< (std::ostream &out, const Cents &cents)
+        {
+            out << cents.m_cents << " cents ";
+            return out;
+        }
+    };
+
+如果我们再编译一次，我们会得到另外一个错误：
+
+.. code-block:: Text
+
+    c:test.cpp(14) : error C2676: binary '+=' : 'Cents' does not define this operator or a conversion to a type acceptable to the predefined operator
+
+这个错误实际上是在我们调用 ``average(Cents*, int)`` 的时候生成的模板实例产生的。请记住，当我们调用模板函数的时候，编译器会照着模板生成这个函数的复制，并将模板类型参数替换为我们调用时传入的类型。下面这个是当 ``T`` 是 ``Cents`` 的时候的函数模板实例：
+
+.. code-block:: C++
+    :linenos:
+
+    template <class T>
+    Cents average(Cents *array, int length)
+    {
+        Cents sum(0);
+        for (int count{ 0 }; count < length; ++count)
+            sum += array[count];
+    
+        sum /= length;
+        return sum;
+    }
+
+之所以我们会遇到错误信息是因为这一行：
+
+.. code-block:: C++
+    :linenos:
+    :emphasize-lines: 6
+
+    template <class T>
+    Cents average(Cents *array, int length)
+    {
+        Cents sum(0);
+        for (int count{ 0 }; count < length; ++count)
+            sum += array[count];
+    
+        sum /= length;
+        return sum;
+    }
+
+这个情况中，``sum`` 是一个 ``Cents`` 对象，但我们没有定义 ``Cents`` 对象的 ``operator+=``！为了让 ``average()`` 能够接受 ``Cents``，我们需要定义这个函数。继续往后看，我们会发现 ``average()`` 还使用了 ``operator/=``，所以我们就捎带着这个函数一起写了：
+
+.. code-block:: C++
+    :linenos:
+
+    class Cents
+    {
+    private:
+        int m_cents;
+    public:
+        Cents(int cents)
+            : m_cents{ cents }
+        {
+        }
+    
+        friend bool operator>(const Cents &c1, const Cents &c2)
+        {
+            return (c1.m_cents > c2.m_cents);
+        }
+    
+        friend std::ostream& operator<< (std::ostream &out, const Cents &cents)
+        {
+            out << cents.m_cents << " cents ";
+            return out;
+        }
+    
+        Cents& operator+=(const Cents &cents)
+        {
+            m_cents += cents.m_cents;
+            return *this;
+        }
+    
+        Cents& operator/=(int value)
+        {
+            m_cents /= value;
+            return *this;
+        }
+    };
+
+最终，我们的代码可以通过编译并运行了！结果如下：
+
+.. code-block:: Text
+
+    11 cents
+
+看起来我们做了很多事情，但是这只是因为我们是从头开始写我们的 ``Cents`` 类的。关键点在于我们并不需要修改 ``average()`` 就可以让它适用于 ``Cents`` 类的对象（或任何其他类型）。我们仅仅需要定义实现 ``average()`` 用到的几个操作符，剩下的编译器就都帮我们做了！
