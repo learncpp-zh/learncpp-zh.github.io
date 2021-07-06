@@ -6,13 +6,14 @@
 <html lang="zh">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>第零章第五节 编译器，链接器和库的简介 &#8212; learncpp-zh  文档</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
     
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -67,7 +68,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="id1">
+  <section id="id1">
 <h1>第零章第五节 编译器，链接器和库的简介<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <p>原文作者：Alex</p>
 <p>首次发布：2018 年 11 月 18 日</p>
@@ -98,7 +99,7 @@ s4 &lt;- s7
 &#64;enduml
 "/>
 </p>
-<div class="section" id="id2">
+<section id="id2">
 <h2>第四步：编译你的源代码<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>我们使用c++编译器来编译一个c++程序。c++编译器会依序检视你程序中的每一个源代码文件（ <em>.cpp</em>文件）并且完成两个重要的任务：</p>
 <p>首先，编译器会检查你的代码，确保他们符合c++语言的规则。如果你的代码没有符合规则，编译器会报错（以及错误所在的行号）来帮助你定位需要进行修改的地方，编译的过程在遇到错误后会终止，并且直到错误被修复才可以继续进行编译。</p>
@@ -122,8 +123,8 @@ mat --&gt; mat.o : 编译
 "/>
 </p>
 <p>c++ 编译器适用于多种操作系统。我们不久就会讨论如何安装一个编译器，所以现在我们先不慌说。</p>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h2>第五步：链接目标文件与库<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>在编译器创建一个或者多个目标文件后，另一个叫做 <strong>链接器</strong>的程序就会涉入。链接器有三重职责：</p>
 <p>首先，将所有由编译器生成的目标文件组合成一个可执行文件</p>
@@ -163,17 +164,17 @@ linker --&gt; exe
 <p class="topic-title">对于高级阅读者</p>
 <p>一些复杂项目的开发环境会使用 <strong>makefile</strong>，这是一个描述如何构建程序的文件（e.g. 哪一个文件需要编译链接，哪一个文件需要以其他方式处理）。有整本整本的书籍写如何编写和维护makefile的，并且makefile可以成为非常强大的工具。但是，由于makefile不是c++核心语言的一部分，你也不需要用他们来继续我们的教程，所以我们不会在本教程系列中讨论它</p>
 </div>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h2>第六步以及第七步：测试以及调试<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
 <p>这是写程序中有趣的部分（希望如此）（译者注：nono）！你能够运行你的可执行文件并且看看它是否产生了你期待的输出！</p>
 <p>如果你的程序没有正确的工作，那么就到了做一些调试并且找出问题所在的时候了。我们不久会更具体的讨论如何测试你的程序并且调试程序</p>
-</div>
-<div class="section" id="ide">
+</section>
+<section id="ide">
 <h2>集成开发环境（IDE）<a class="headerlink" href="#ide" title="永久链接至标题">¶</a></h2>
 <p>注意第3，4，5以及第7步都与软件（编辑器，编译器，链接器，调试器）有关。你当然可以每一步使用分开独立的不同软件，但你也可以使用一个叫做集成开发环境（IDE）的软件包，它可以将这些你需要用到的功能集成捆绑起来。我们在下一节当中将会讨论IDE并且安装一个IDE。</p>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -266,7 +267,7 @@ linker --&gt; exe
 
     <div class="footer" role="contentinfo">
         &#169; 版权所有 2021, learncpp-zh.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

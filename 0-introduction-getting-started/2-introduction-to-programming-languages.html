@@ -6,13 +6,14 @@
 <html lang="zh">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>第零章第二节 编程语言简介 &#8212; learncpp-zh  文档</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
     
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -67,7 +68,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="id1">
+  <section id="id1">
 <h1>第零章第二节 编程语言简介<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <p>原文作者：Alex</p>
 <p>首次发布：2007 年 5 月 27 日</p>
@@ -78,22 +79,22 @@
 <p>现代计算机的运算速度快得令人难以置信，并且还在变得越来越快。然而，计算机同样有一些显著的限制：他们天生只能理解一个有限范围内的指令，并且必须被准确地告知如何去做。</p>
 <p>一个 <strong>计算机程序</strong> （通常也被叫做一个 <strong>应用</strong> ）是为了让计算机执行一些任务而编写的一组计算机可以照做的指令。创造一个程序的过程叫做 <strong>编程</strong> 。程序员通常通过生产 <strong>源代码</strong> （通常简称 <strong>源码</strong> ）来创造程序。这里的源码指的是一个或多个文件中的指令列表。</p>
 <p>组成计算机并执行程序的一组计算机物理组件被称作 <strong>硬件</strong> 。一个计算机程序被加载进内存并硬件开始依次执行指令的过程被称作 <strong>运行</strong> 或者 <strong>执行</strong> 程序。</p>
-<div class="section" id="id2">
+<section id="id2">
 <h2>机器语言<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>一个电脑的 CPU 并不会说 C++。CPU 可以直接理解的一组有限的指令叫做 <strong>机器码</strong> （或者 <strong>机器语言</strong> 或者一个 <strong>指令集</strong> ）。</p>
 <p>这里是一个样例机器语言指令：<code class="docutils literal notranslate"><span class="pre">10110000</span> <span class="pre">01100001</span></code></p>
 <p>在以前计算机刚刚被发明的时候，程序员们不得不直接用机器语言写程序。这非常困难并且非常耗时。</p>
 <p>这些指令是如何被组织起来的不再这个简介的讨论范围内，不过有两个有趣的事情需要指出。一是每个指令都是一个 <code class="docutils literal notranslate"><span class="pre">0</span></code> 和 <code class="docutils literal notranslate"><span class="pre">1</span></code> 的序列。每个独立的 <code class="docutils literal notranslate"><span class="pre">0</span></code> 或 <code class="docutils literal notranslate"><span class="pre">1</span></code> 被称作一个 <strong>二进制位</strong> 或 <strong>比特</strong> 。构成一个指令所需的比特数量并不恒定——举例来说，一些 CPU 的所有指令都是 32 个比特长，但一些其他的 CPU（比如 x86 系列，你很大概率正在用这样一款 CPU）接受长度不定的指令。</p>
 <p>二是每一组二进制位都会被 CPU 解释作一个使其完成一个非常具体的任务的指令，比如 <em>比较这两个数字</em> 或者 <em>把这个数字放进那个内存地址里</em>。然而，因为不同的 CPU 有着不同的指令集，为一种 CPU 编写的程序不能用在指令集不同的另一种 CPU 上。这意味着程序大部分都不 <strong>可移植</strong> （在不进行大的重写的前提下可用）到其他种类的系统中，必须要全部重写。</p>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h2>汇编语言<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>由于机器语言对于人类来说既难阅读又难理解，有人发明了汇编语言。在一个汇编语言里，每个指令都被一个短短的缩写指代，并且还可以使用名称和一些其他数字。</p>
 <p>这里是上文中的机器语言指令对应的汇编语言：<code class="docutils literal notranslate"><span class="pre">mov</span> <span class="pre">al,</span> <span class="pre">061h</span></code></p>
 <p>这个特点让汇编相比机器语言来说更加易读、易写。然而 CPU 不能直接理解汇编语言。所以汇编语言必须要被翻译成机器语言才能在计算机中运行。这个过程是通过一个叫做 <strong>汇编器</strong> 的程序完成的。用汇编写的程序通常非常快，现在在性能非常关键的情况下还是会使用汇编语言。（译注：快的不是语言是代码，汇编语言有写出非常快的程序的能力，但需要程序员有释放汇编能力的能力）</p>
 <p>然而汇编语言仍然有一些缺点。首先，汇编语言为了完成一些简单的功能还是需要编写大量代码。即便单个指令可读性提升了，理解整个程序依然很有挑战性（这有点像认识了 26 个英文字母就去读一封英文信）。其次，汇编语言的可移植性依然不是太好——一个为一种 CPU 编写的汇编程序通常在其他的指令集中也运行不了，依然必须重写或者大规模修改。</p>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h2>高级语言<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
 <p>为了解决可读性和可移植性的问题，大家开发了新型编程语言，比如 C 语言、C++、Pascal（以及后来的 Java、Javascript 和 Perl）。这些语言被称作 <strong>高级语言</strong> ，因为他们设计时允许程序员在编程时不用考虑程序将会运行在什么样的计算机上。</p>
 <p>上面的语句对应的 C/C++ 语句是：<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">97;</span></code></p>
@@ -166,8 +167,8 @@ mipsc --&gt; mipse
 </p>
 <p>对于可以执行来说，有两个特例。一是在很多操作系统中，比如微软 Windows，包含了一些平台专用的能力，你可以在自己的程序中引用他们。这可能会帮助你在特定的平台上写程序时更轻松，但在移植的时候会更加困难。在本教程中，我们会尽量避免这种平台专用代码。</p>
 <p>一些编译器支持一些编译器专用拓展——如果你使用这些拓展，你的程序就不能在不更改的前提下使用其他不支持这些拓展的编译器进行编译。在你安装了一个编译器之后我们会多讨论一些关于这件事的东西。</p>
-</div>
-<div class="section" id="id6">
+</section>
+<section id="id6">
 <h2>规则、最佳实践以及警告<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
 <p>在这篇文章之后，我们会高亮很多非常重要的点，他们均属于以下三个类型。</p>
 <div class="admonition- admonition">
@@ -182,8 +183,8 @@ mipsc --&gt; mipse
 <p class="admonition-title">警告</p>
 <p>警告是一些你 <em>不应该</em> 做的事情，如果你做了，可能会发生意想不到的结果。</p>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -276,7 +277,7 @@ mipsc --&gt; mipse
 
     <div class="footer" role="contentinfo">
         &#169; 版权所有 2021, learncpp-zh.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>

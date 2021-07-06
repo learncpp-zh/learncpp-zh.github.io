@@ -6,13 +6,14 @@
 <html lang="zh">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>第十九章第二节 函数模板实例 &#8212; learncpp-zh  文档</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/cloud.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/cloud.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
     
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -63,7 +64,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="id1">
+  <section id="id1">
 <h1>第十九章第二节 函数模板实例<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <p>原文作者：Alex</p>
 <p>首次发布：2008 年 4 月 29 日</p>
@@ -73,127 +74,83 @@
 <p>原文链接：<a class="reference external" href="https://www.learncpp.com/cpp-tutorial/function-template-instances/">https://www.learncpp.com/cpp-tutorial/function-template-instances/</a></p>
 <p>看一看模板函数在 C++ 中是怎么实现的挺有意义的，因为之后的课程会在这些概念之上建立起来。看起来 C++ 并不直接编译模板函数，而是在编译的时候，当编译器遇到一个对模板函数的调用，编译器会复制这个模板函数并用真实类型替代模板类型参数。这个使用真实类型的函数叫做 <strong>模板函数实例</strong>。</p>
 <p>让我们来看看这个过程的一个例子。首先我们有一个模板函数：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span>
-<span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">max</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="linenos">2</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">max</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">)</span>
+<span class="linenos">3</span><span class="p">{</span>
+<span class="linenos">4</span>    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
+<span class="linenos">5</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>当你的程序被编译的时候，编译器遇到了这样一个对模板函数的调用：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">i</span><span class="p">{</span> <span class="n">max</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="p">};</span>  <span class="c1">// 调用了 max(int, int)</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kt">int</span> <span class="n">i</span><span class="p">{</span> <span class="n">max</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="p">};</span>  <span class="c1">// 调用了 max(int, int)</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>编译器会说：“哦，我们想要调用 <code class="docutils literal notranslate"><span class="pre">max(int,</span> <span class="pre">int)</span></code>”。编译器复制函数模板并且构造了模板实例 <code class="docutils literal notranslate"><span class="pre">max(int,</span> <span class="pre">int)</span></code>：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="n">max</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">const</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="nf">max</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">)</span>
+<span class="linenos">2</span><span class="p">{</span>
+<span class="linenos">3</span>    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
+<span class="linenos">4</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>这个就是个可以被编译成机器码的普通函数了。</p>
 <p>现在，比如说，之后你的代码里，你调用了使用了另一种类型的 <code class="docutils literal notranslate"><span class="pre">max()</span></code>：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">double</span> <span class="n">d</span><span class="p">{</span> <span class="n">max</span><span class="p">(</span><span class="mf">6.34</span><span class="p">,</span> <span class="mf">18.523</span><span class="p">)</span> <span class="p">};</span>  <span class="c1">// 调用了 max(double, double)</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kt">double</span> <span class="n">d</span><span class="p">{</span> <span class="n">max</span><span class="p">(</span><span class="mf">6.34</span><span class="p">,</span> <span class="mf">18.523</span><span class="p">)</span> <span class="p">};</span>  <span class="c1">// 调用了 max(double, double)</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>C++ 会自动构造一个 <code class="docutils literal notranslate"><span class="pre">max(double,</span> <span class="pre">double)</span></code> 的模板实例：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="n">max</span><span class="p">(</span><span class="k">const</span> <span class="kt">double</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">const</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="nf">max</span><span class="p">(</span><span class="k">const</span> <span class="kt">double</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">)</span>
+<span class="linenos">2</span><span class="p">{</span>
+<span class="linenos">3</span>    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
+<span class="linenos">4</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>然后编译它。</p>
 <p>编译器非常聪明，它可以知道对于每组类型参数（每个文件中）只需要生成一个模板实例。还值得注意的是，如果你创建了一个模板函数但是不调用它，编译器不会创建模板实例。</p>
-<div class="section" id="id2">
+<section id="id2">
 <h2>操作符、函数调用和函数模板<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>模板函数对于内置类型（比如 <code class="docutils literal notranslate"><span class="pre">char</span></code>、<code class="docutils literal notranslate"><span class="pre">int</span></code>、<code class="docutils literal notranslate"><span class="pre">double</span></code> 等等）和类都有效，但有一点需要注意。当编译器编译模板实例的时候，它就和在编译普通函数一样。在模板函数中用到的任何操作符或者函数调用都必须适用于任何你希望为之实例化的类型。我们来看一看这个问题的细节。</p>
 <p>首先我们创建一个简单的类：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Cents</span>
-<span class="p">{</span>
-<span class="k">private</span><span class="o">:</span>
-    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
-<span class="k">public</span><span class="o">:</span>
-    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
-        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">m_cents</span> <span class="p">}</span>
-    <span class="p">{</span>
-    <span class="p">}</span>
-<span class="p">};</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span> <span class="nc">Cents</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span><span class="k">private</span><span class="o">:</span>
+<span class="linenos"> 4</span>    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="k">public</span><span class="o">:</span>
+<span class="linenos"> 6</span>    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
+<span class="linenos"> 7</span>        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">m_cents</span> <span class="p">}</span>
+<span class="linenos"> 8</span>    <span class="p">{</span>
+<span class="linenos"> 9</span>    <span class="p">}</span>
+<span class="linenos">10</span><span class="p">};</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>现在，我们来看一看将这个 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 类传入我们的模板 <code class="docutils literal notranslate"><span class="pre">max()</span></code> 中会怎么样：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span>  <span class="c1">// 这个就是模板参数声明</span>
-<span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">max</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">y</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="k">class</span> <span class="nc">Cents</span>
-<span class="p">{</span>
-<span class="k">private</span><span class="o">:</span>
-    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
-<span class="k">public</span><span class="o">:</span>
-    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
-        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
-    <span class="p">{</span>
-    <span class="p">}</span>
-<span class="p">};</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Cents</span> <span class="n">nickle</span><span class="p">{</span> <span class="mi">5</span> <span class="p">};</span>
-    <span class="n">Cents</span> <span class="n">dime</span><span class="p">{</span> <span class="mi">10</span> <span class="p">};</span>
-
-    <span class="n">Cents</span> <span class="n">bigger</span><span class="p">{</span> <span class="n">max</span><span class="p">(</span><span class="n">nickle</span><span class="p">,</span> <span class="n">dime</span><span class="p">)</span> <span class="p">};</span>
-
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span>  <span class="c1">// 这个就是模板参数声明</span>
+<span class="linenos"> 2</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">max</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">y</span><span class="p">)</span>
+<span class="linenos"> 3</span><span class="p">{</span>
+<span class="linenos"> 4</span>    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="p">}</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">class</span> <span class="nc">Cents</span>
+<span class="linenos"> 8</span><span class="p">{</span>
+<span class="linenos"> 9</span><span class="k">private</span><span class="o">:</span>
+<span class="linenos">10</span>    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
+<span class="linenos">11</span><span class="k">public</span><span class="o">:</span>
+<span class="linenos">12</span>    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
+<span class="linenos">13</span>        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
+<span class="linenos">14</span>    <span class="p">{</span>
+<span class="linenos">15</span>    <span class="p">}</span>
+<span class="linenos">16</span><span class="p">};</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="linenos">19</span><span class="p">{</span>
+<span class="linenos">20</span>    <span class="n">Cents</span> <span class="n">nickle</span><span class="p">{</span> <span class="mi">5</span> <span class="p">};</span>
+<span class="linenos">21</span>    <span class="n">Cents</span> <span class="n">dime</span><span class="p">{</span> <span class="mi">10</span> <span class="p">};</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span>    <span class="n">Cents</span> <span class="n">bigger</span><span class="p">{</span> <span class="n">max</span><span class="p">(</span><span class="n">nickle</span><span class="p">,</span> <span class="n">dime</span><span class="p">)</span> <span class="p">};</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">26</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>然后编译器会试图编译这个函数。看到问题了吗？C++ 不能计算 <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">y</span></code>，因为 <code class="docutils literal notranslate"><span class="pre">x</span></code> 和 <code class="docutils literal notranslate"><span class="pre">y</span></code> 是 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 对象，C++ 并不知道怎么比较它们。因此，这会生成一个看起来相当平淡的编译错误，比如：</p>
 <div class="highlight-Text notranslate"><div class="highlight"><pre><span></span>1&gt;c:\consoleapplication1\main.cpp(4): error C2676: binary &#39;&gt;&#39;: &#39;const Cents&#39; does not define this operator or a conversion to a type acceptable to the predefined operator
 1&gt;  c:\consoleapplication1\main.cpp(23): note: see reference to function template instantiation &#39;const T &amp;max(const T &amp;,const T &amp;)&#39; being compiled
@@ -205,195 +162,113 @@
 </div>
 <p>上面这个错误信息指出，我们没有重载 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 类的 <code class="docutils literal notranslate"><span class="pre">operator</span> <span class="pre">&gt;</span></code>。下面的错误指出，模板函数调用产生了这个错误，同时还附带了模板参数。</p>
 <p>为了解决这个问题，我们只需要简单地重载任何我们需要使用的类的 <code class="docutils literal notranslate"><span class="pre">operator</span> <span class="pre">&gt;</span></code> 就可以了：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Cents</span>
-<span class="p">{</span>
-<span class="k">private</span><span class="o">:</span>
-    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
-<span class="k">public</span><span class="o">:</span>
-    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
-        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
-    <span class="p">{</span>
-    <span class="p">}</span>
-
-    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&gt;</span> <span class="n">c2</span><span class="p">.</span><span class="n">m_cents</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">};</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span> <span class="nc">Cents</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span><span class="k">private</span><span class="o">:</span>
+<span class="linenos"> 4</span>    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="k">public</span><span class="o">:</span>
+<span class="linenos"> 6</span>    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
+<span class="linenos"> 7</span>        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
+<span class="linenos"> 8</span>    <span class="p">{</span>
+<span class="linenos"> 9</span>    <span class="p">}</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span>
+<span class="linenos">12</span>    <span class="p">{</span>
+<span class="linenos">13</span>        <span class="k">return</span> <span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&gt;</span> <span class="n">c2</span><span class="p">.</span><span class="n">m_cents</span><span class="p">);</span>
+<span class="linenos">14</span>    <span class="p">}</span>
+<span class="linenos">15</span><span class="p">};</span>
 </pre></div>
-</td></tr></table></div>
-<p>现在 C++ 就可以知道当 <code class="docutils literal notranslate"><span class="pre">x</span></code> 和 <code class="docutils literal notranslate"><span class="pre">y</span></code> 都是 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 对象的时候怎么比较它们了！结果就是我们的 <code class="docutils literal notranslate"><span class="pre">max()</span></code> 函数可以被用在 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 类型上了。</p>
 </div>
-<div class="section" id="id3">
+<p>现在 C++ 就可以知道当 <code class="docutils literal notranslate"><span class="pre">x</span></code> 和 <code class="docutils literal notranslate"><span class="pre">y</span></code> 都是 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 对象的时候怎么比较它们了！结果就是我们的 <code class="docutils literal notranslate"><span class="pre">max()</span></code> 函数可以被用在 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 类型上了。</p>
+</section>
+<section id="id3">
 <h2>另一个例子<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>我们再来举一个函数模板的例子。下面这个函数模板会计算一个数组中所有对象的平均值：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
-<span class="n">T</span> <span class="n">average</span><span class="p">(</span><span class="n">T</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">T</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
-        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
-
-    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="linenos"> 2</span><span class="n">T</span> <span class="n">average</span><span class="p">(</span><span class="n">T</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+<span class="linenos"> 3</span><span class="p">{</span>
+<span class="linenos"> 4</span>    <span class="n">T</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
+<span class="linenos"> 7</span>        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
+<span class="linenos">10</span>    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+<span class="linenos">11</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>然后我们来看看它用起来怎么样：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
-
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
-<span class="n">T</span> <span class="n">average</span><span class="p">(</span><span class="n">T</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">T</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
-        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
-
-    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="kt">int</span> <span class="n">array1</span><span class="p">[]{</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span> <span class="p">};</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">average</span><span class="p">(</span><span class="n">array1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
-
-    <span class="kt">double</span> <span class="n">array2</span><span class="p">[]{</span> <span class="mf">3.12</span><span class="p">,</span> <span class="mf">3.45</span><span class="p">,</span> <span class="mf">9.23</span><span class="p">,</span> <span class="mf">6.34</span> <span class="p">};</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">average</span><span class="p">(</span><span class="n">array2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
-
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="linenos"> 4</span><span class="n">T</span> <span class="n">average</span><span class="p">(</span><span class="n">T</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+<span class="linenos"> 5</span><span class="p">{</span>
+<span class="linenos"> 6</span>    <span class="n">T</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="linenos"> 7</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
+<span class="linenos"> 8</span>        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span>    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+<span class="linenos">12</span><span class="p">}</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="linenos">15</span><span class="p">{</span>
+<span class="linenos">16</span>    <span class="kt">int</span> <span class="n">array1</span><span class="p">[]{</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span> <span class="p">};</span>
+<span class="linenos">17</span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">average</span><span class="p">(</span><span class="n">array1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span>    <span class="kt">double</span> <span class="n">array2</span><span class="p">[]{</span> <span class="mf">3.12</span><span class="p">,</span> <span class="mf">3.45</span><span class="p">,</span> <span class="mf">9.23</span><span class="p">,</span> <span class="mf">6.34</span> <span class="p">};</span>
+<span class="linenos">20</span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">average</span><span class="p">(</span><span class="n">array2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">23</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>这会输出这些值：</p>
-<div class="highlight-Text notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>3
-5.535
+<div class="highlight-Text notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>3
+<span class="linenos">2</span>5.535
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>如你所见，它在内置类型中表现得很棒！</p>
 <p>值得一提的事，因为我们的返回值和数组元素的模板类型是一样的，所以计算整型变量的平均值会返回一个整型结果（截断小数部分）。这和我们直接做整型变量的除法会产生整型变量是类似的。我们这样定义这个函数的表现不能说是错的，但是会让人意想不到，所以这里给用户留一个比较完备的注释会比较好。</p>
 <p>接下来我们来看看如果我们将 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 数组传进这个函数会怎样：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
-
-<span class="k">class</span> <span class="nc">Cents</span>
-<span class="p">{</span>
-<span class="k">private</span><span class="o">:</span>
-    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
-<span class="k">public</span><span class="o">:</span>
-    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
-        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
-    <span class="p">{</span>
-    <span class="p">}</span>
-
-    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&gt;</span> <span class="n">c2</span><span class="p">.</span><span class="n">m_cents</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">};</span>
-
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
-<span class="n">T</span> <span class="n">average</span><span class="p">(</span><span class="n">T</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">T</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
-        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
-
-    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Cents</span> <span class="n">array3</span><span class="p">[]{</span> <span class="n">Cents</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">Cents</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Cents</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span> <span class="n">Cents</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span> <span class="p">};</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">average</span><span class="p">(</span><span class="n">array3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
-
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">class</span> <span class="nc">Cents</span>
+<span class="linenos"> 4</span><span class="p">{</span>
+<span class="linenos"> 5</span><span class="k">private</span><span class="o">:</span>
+<span class="linenos"> 6</span>    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
+<span class="linenos"> 7</span><span class="k">public</span><span class="o">:</span>
+<span class="linenos"> 8</span>    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
+<span class="linenos"> 9</span>        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
+<span class="linenos">10</span>    <span class="p">{</span>
+<span class="linenos">11</span>    <span class="p">}</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span>
+<span class="linenos">14</span>    <span class="p">{</span>
+<span class="linenos">15</span>        <span class="k">return</span> <span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&gt;</span> <span class="n">c2</span><span class="p">.</span><span class="n">m_cents</span><span class="p">);</span>
+<span class="linenos">16</span>    <span class="p">}</span>
+<span class="linenos">17</span><span class="p">};</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="linenos">20</span><span class="n">T</span> <span class="n">average</span><span class="p">(</span><span class="n">T</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+<span class="linenos">21</span><span class="p">{</span>
+<span class="linenos">22</span>    <span class="n">T</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="linenos">23</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
+<span class="linenos">24</span>        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span>    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
+<span class="linenos">27</span>    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+<span class="linenos">28</span><span class="p">}</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span><span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="linenos">31</span><span class="p">{</span>
+<span class="linenos">32</span>    <span class="n">Cents</span> <span class="n">array3</span><span class="p">[]{</span> <span class="n">Cents</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">Cents</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Cents</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span> <span class="n">Cents</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span> <span class="p">};</span>
+<span class="linenos">33</span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">average</span><span class="p">(</span><span class="n">array3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">36</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>编译器会发疯一样输出一大堆错误信息！</p>
 <div class="highlight-Text notranslate"><div class="highlight"><pre><span></span>example.cpp
 
@@ -448,172 +323,102 @@ Compiler returned: 2
 </div>
 <p>还记得我之前说过的离谱的错误信息么？我们踩狗屎运了。但除了看起来比较吓人，这些提示还是比较直白的。第一行告诉你它找不到 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 类的 <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> 重载。中间的所有东西都是它试图去匹配但是失败了的函数。最后一个错误指出了究竟是哪个函数产生了这么多错误信息。</p>
 <p>请记住，<code class="docutils literal notranslate"><span class="pre">average()</span></code> 函数返回一个 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 对象，我们在试图用 <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> 向 <code class="docutils literal notranslate"><span class="pre">std::cout</span></code> 流式输出这个对象。然而我们并没有为 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 类定义 <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> 操作符。那么我们现在来定义一下：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Cents</span>
-<span class="p">{</span>
-<span class="k">private</span><span class="o">:</span>
-    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
-<span class="k">public</span><span class="o">:</span>
-    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
-        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
-    <span class="p">{</span>
-    <span class="p">}</span>
-
-    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&gt;</span> <span class="n">c2</span><span class="p">.</span><span class="n">m_cents</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">cents</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="n">cents</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; cents &quot;</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">};</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span> <span class="nc">Cents</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span><span class="k">private</span><span class="o">:</span>
+<span class="linenos"> 4</span>    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="k">public</span><span class="o">:</span>
+<span class="linenos"> 6</span>    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
+<span class="linenos"> 7</span>        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
+<span class="linenos"> 8</span>    <span class="p">{</span>
+<span class="linenos"> 9</span>    <span class="p">}</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span>
+<span class="linenos">12</span>    <span class="p">{</span>
+<span class="linenos">13</span>        <span class="k">return</span> <span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&gt;</span> <span class="n">c2</span><span class="p">.</span><span class="n">m_cents</span><span class="p">);</span>
+<span class="linenos">14</span>    <span class="p">}</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>    <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">cents</span><span class="p">)</span>
+<span class="linenos">17</span>    <span class="p">{</span>
+<span class="linenos">18</span>        <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="n">cents</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; cents &quot;</span><span class="p">;</span>
+<span class="linenos">19</span>        <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+<span class="linenos">20</span>    <span class="p">}</span>
+<span class="linenos">21</span><span class="p">};</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>如果我们再编译一次，我们会得到另外一个错误：</p>
 <div class="highlight-Text notranslate"><div class="highlight"><pre><span></span>c:test.cpp(14) : error C2676: binary &#39;+=&#39; : &#39;Cents&#39; does not define this operator or a conversion to a type acceptable to the predefined operator
 </pre></div>
 </div>
 <p>这个错误实际上是在我们调用 <code class="docutils literal notranslate"><span class="pre">average(Cents*,</span> <span class="pre">int)</span></code> 的时候生成的模板实例产生的。请记住，当我们调用模板函数的时候，编译器会照着模板生成这个函数的复制，并将模板类型参数替换为我们调用时传入的类型。下面这个是当 <code class="docutils literal notranslate"><span class="pre">T</span></code> 是 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 的时候的函数模板实例：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
-<span class="n">Cents</span> <span class="n">average</span><span class="p">(</span><span class="n">Cents</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">Cents</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
-        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
-
-    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="linenos"> 2</span><span class="n">Cents</span> <span class="n">average</span><span class="p">(</span><span class="n">Cents</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+<span class="linenos"> 3</span><span class="p">{</span>
+<span class="linenos"> 4</span>    <span class="n">Cents</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="linenos"> 5</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
+<span class="linenos"> 6</span>        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span>    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
+<span class="linenos"> 9</span>    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+<span class="linenos">10</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>之所以我们会遇到错误信息是因为这一行：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
-<span class="n">Cents</span> <span class="n">average</span><span class="p">(</span><span class="n">Cents</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">Cents</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
-<span class="hll">        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
-</span>
-    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="linenos"> 2</span><span class="n">Cents</span> <span class="n">average</span><span class="p">(</span><span class="n">Cents</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+<span class="linenos"> 3</span><span class="p">{</span>
+<span class="linenos"> 4</span>    <span class="n">Cents</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="linenos"> 5</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
+<span class="hll"><span class="linenos"> 6</span>        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
+</span><span class="linenos"> 7</span>
+<span class="linenos"> 8</span>    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
+<span class="linenos"> 9</span>    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+<span class="linenos">10</span><span class="p">}</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>这个情况中，<code class="docutils literal notranslate"><span class="pre">sum</span></code> 是一个 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 对象，但我们没有定义 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 对象的 <code class="docutils literal notranslate"><span class="pre">operator+=</span></code>！为了让 <code class="docutils literal notranslate"><span class="pre">average()</span></code> 能够接受 <code class="docutils literal notranslate"><span class="pre">Cents</span></code>，我们需要定义这个函数。继续往后看，我们会发现 <code class="docutils literal notranslate"><span class="pre">average()</span></code> 还使用了 <code class="docutils literal notranslate"><span class="pre">operator/=</span></code>，所以我们就捎带着这个函数一起写了：</p>
-<div class="highlight-C++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Cents</span>
-<span class="p">{</span>
-<span class="k">private</span><span class="o">:</span>
-    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
-<span class="k">public</span><span class="o">:</span>
-    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
-        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
-    <span class="p">{</span>
-    <span class="p">}</span>
-
-    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&gt;</span> <span class="n">c2</span><span class="p">.</span><span class="n">m_cents</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">cents</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="n">cents</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; cents &quot;</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="n">Cents</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">+=</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">cents</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">m_cents</span> <span class="o">+=</span> <span class="n">cents</span><span class="p">.</span><span class="n">m_cents</span><span class="p">;</span>
-        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="n">Cents</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">/=</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">m_cents</span> <span class="o">/=</span> <span class="n">value</span><span class="p">;</span>
-        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">};</span>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span> <span class="nc">Cents</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span><span class="k">private</span><span class="o">:</span>
+<span class="linenos"> 4</span>    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="k">public</span><span class="o">:</span>
+<span class="linenos"> 6</span>    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
+<span class="linenos"> 7</span>        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
+<span class="linenos"> 8</span>    <span class="p">{</span>
+<span class="linenos"> 9</span>    <span class="p">}</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span>
+<span class="linenos">12</span>    <span class="p">{</span>
+<span class="linenos">13</span>        <span class="k">return</span> <span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&gt;</span> <span class="n">c2</span><span class="p">.</span><span class="n">m_cents</span><span class="p">);</span>
+<span class="linenos">14</span>    <span class="p">}</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>    <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">cents</span><span class="p">)</span>
+<span class="linenos">17</span>    <span class="p">{</span>
+<span class="linenos">18</span>        <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="n">cents</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; cents &quot;</span><span class="p">;</span>
+<span class="linenos">19</span>        <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+<span class="linenos">20</span>    <span class="p">}</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>    <span class="n">Cents</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">+=</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">cents</span><span class="p">)</span>
+<span class="linenos">23</span>    <span class="p">{</span>
+<span class="linenos">24</span>        <span class="n">m_cents</span> <span class="o">+=</span> <span class="n">cents</span><span class="p">.</span><span class="n">m_cents</span><span class="p">;</span>
+<span class="linenos">25</span>        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="linenos">26</span>    <span class="p">}</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>    <span class="n">Cents</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">/=</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+<span class="linenos">29</span>    <span class="p">{</span>
+<span class="linenos">30</span>        <span class="n">m_cents</span> <span class="o">/=</span> <span class="n">value</span><span class="p">;</span>
+<span class="linenos">31</span>        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="linenos">32</span>    <span class="p">}</span>
+<span class="linenos">33</span><span class="p">};</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>最终，我们的代码可以通过编译并运行了！结果如下：</p>
 <div class="highlight-Text notranslate"><div class="highlight"><pre><span></span>11 cents
 </pre></div>
 </div>
 <p>看起来我们做了很多事情，但是这只是因为我们是从头开始写我们的 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 类的。关键点在于我们并不需要修改 <code class="docutils literal notranslate"><span class="pre">average()</span></code> 就可以让它适用于 <code class="docutils literal notranslate"><span class="pre">Cents</span></code> 类的对象（或任何其他类型）。我们仅仅需要定义实现 <code class="docutils literal notranslate"><span class="pre">average()</span></code> 用到的几个操作符，剩下的编译器就都帮我们做了！</p>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -696,7 +501,7 @@ Compiler returned: 2
 
     <div class="footer" role="contentinfo">
         &#169; 版权所有 2021, learncpp-zh.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
     </div>
     <!-- cloud_sptheme 1.4 -->
   </body>
